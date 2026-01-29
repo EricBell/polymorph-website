@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  hugo:
+    image: ghcr.io/gohugoio/hugo:latest
+    command: server --bind 0.0.0.0 --baseURL https://polymorph.co
+    volumes:
+      - polymorph-site:/src
+    ports:
+      - 1313
+    restart: unless-stopped
+    environment:
+      - HUGO_ENV=production
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.polymorph-hugo.rule=Host(`polymorph.co`) || Host(`www.polymorph.co`)"
+      - "traefik.http.routers.polymorph-hugo.entrypoints=websecure"
+      - "traefik.http.routers.polymorph-hugo.tls.certResolver=letsencrypt"
+      - "traefik.http.services.polymorph-hugo.loadbalancer.server.port=1313"
+
+volumes:
+  polymorph-site:
+
+networks:
+  dokploy-network:
+    external: true
