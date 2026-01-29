@@ -1,12 +1,12 @@
 version: "3"
 
 services:
+ 
   hugo:
     image: ghcr.io/gohugoio/hugo:latest
     user: "0"
     working_dir: /src
-    # run the hugo binary (image ENTRYPOINT) with flags (include production env)
-    command: ["--config","hugo.toml","--destination","/src/public","--minify","--environment","production"]
+    command: ["--config","hugo.toml","--baseURL","https://polymorph.co/","--destination","/src/public","--minify","--environment","production","--cleanDestinationDir"]
     volumes:
       - ./:/src
     environment:
@@ -14,6 +14,7 @@ services:
     restart: "no"
     networks:
       - dokploy-network
+
 
   nginx:
     image: nginx:1.25-alpine
