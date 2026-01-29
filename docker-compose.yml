@@ -2,8 +2,9 @@ version: "3"
 
 services:
 
-  hugo:
+ hugo:
     image: ghcr.io/gohugoio/hugo:latest
+    user: "0"
     working_dir: /src
     command: server --bind 0.0.0.0 --port 1313 --baseURL https://polymorph.co --config hugo.toml
     volumes:
@@ -21,6 +22,11 @@ services:
       - "traefik.http.routers.polymorph-hugo.entrypoints=websecure"
       - "traefik.http.routers.polymorph-hugo.tls.certResolver=letsencrypt"
       - "traefik.http.services.polymorph-hugo.loadbalancer.server.port=1313"
+
+
+
+
+
 
 volumes:
   polymorph-site:
