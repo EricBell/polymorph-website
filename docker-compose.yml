@@ -39,12 +39,14 @@ services:
     - dokploy-network
     labels:
     - "traefik.enable=true"
-    - "traefik.http.routers.polymorph.rule=Host(polymorph.co) || Host(www.polymorph.co)"
-    - "traefik.http.routers.polymorph.entrypoints=websecure"
-    - "traefik.http.routers.polymorph.tls.certResolver=letsencrypt"
-    - "traefik.http.services.polymorph.loadbalancer.server.port=80"
-    - "traefik.http.services.polymorph.loadbalancer.server.scheme=http"
+    - "traefik.http.routers.polymorph-nginx.rule=Host(`polymorph.co`) || Host(`www.polymorph.co`)"
+    - "traefik.http.routers.polymorph-nginx.entrypoints=websecure"
+    - "traefik.http.routers.polymorph-nginx.tls.certResolver=letsencrypt"
+    - "traefik.http.routers.polymorph-nginx.service=polymorph-nginx"
+    - "traefik.http.services.polymorph-nginx.loadbalancer.server.port=80"
+    - "traefik.http.services.polymorph-nginx.loadbalancer.server.scheme=http"
 
+ 
 
 
 
