@@ -14,16 +14,16 @@ services:
       - dokploy-network
 
 
+
   nginx:
     image: nginx:1.25-alpine
-    command: sh -c "echo '=== ls -la /usr/share/nginx/html ==='; ls -la /usr/share/nginx/html || true; echo '=== ls -la /usr/share/nginx/html/index* ==='; ls -la /usr/share/nginx/html/index* || true; echo '=== done - sleeping ==='; sleep 3600"
     volumes:
       - ./public:/usr/share/nginx/html:ro
-    ports:
-      - "80:80"
     restart: unless-stopped
     networks:
       - dokploy-network
+    depends_on:
+      - hugo
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.polymorph.rule=Host(`polymorph.co`) || Host(`www.polymorph.co`)"
@@ -31,8 +31,6 @@ services:
       - "traefik.http.routers.polymorph.tls.certResolver=letsencrypt"
       - "traefik.http.services.polymorph.loadbalancer.server.port=80"
       - "traefik.http.services.polymorph.loadbalancer.server.scheme=http"
-
-
 
 
 
