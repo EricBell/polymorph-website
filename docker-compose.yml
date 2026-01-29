@@ -22,7 +22,7 @@ services:
       - "traefik.http.routers.polymorph-hugo.entrypoints=websecure"
       - "traefik.http.routers.polymorph-hugo.tls.certResolver=letsencrypt"
       - "traefik.http.services.polymorph-hugo.loadbalancer.server.port=1313"
-
+      - "traefik.http.services.polymorph-hugo.loadbalancer.server.scheme=http"
 
 
 
