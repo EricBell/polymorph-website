@@ -9,6 +9,8 @@ services:
     command: ["--config","hugo.toml","--destination","/src/public","--minify"]
     volumes:
       - ./:/src
+    environment:
+      - HUGO_ENV=production
     restart: "no"
     networks:
       - dokploy-network
