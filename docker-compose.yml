@@ -1,36 +1,33 @@
 version: "3"
 
 services:
-
- hugo:
+  hugo:
     image: ghcr.io/gohugoio/hugo:latest
     user: "0"
     working_dir: /src
-    command: server --bind 0.0.0.0 --port 1313 --baseURL https://polymorph.co --config hugo.toml
+    command: hugo --config hugo.toml --destination /src/public --minify
     volumes:
       - ./:/src
+    restart: "no"
+    networks:
+      - dokploy-network
+
+  nginx:
+    image: nginx:1.25-alpine
+    volumes:
+      - ./public:/usr/share/nginx/html:ro
     ports:
-      - "1313:1313"
+      - "80:80"
     restart: unless-stopped
-    environment:
-      - HUGO_ENV=production
     networks:
       - dokploy-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.polymorph-hugo.rule=Host(`polymorph.co`) || Host(`www.polymorph.co`)"
-      - "traefik.http.routers.polymorph-hugo.entrypoints=websecure"
-      - "traefik.http.routers.polymorph-hugo.tls.certResolver=letsencrypt"
-      - "traefik.http.services.polymorph-hugo.loadbalancer.server.port=1313"
-      - "traefik.http.services.polymorph-hugo.loadbalancer.server.scheme=http"
-      - "traefik.http.routers.polymorph-hugo.service=polymorph-hugo"
-
-
-
-
-
-volumes:
-  polymorph-site:
+      - "traefik.http.routers.polymorph.rule=Host(`polymorph.co`) || Host(`www.polymorph.co`)"
+      - "traefik.http.routers.polymorph.entrypoints=websecure"
+      - "traefik.http.routers.polymorph.tls.certResolver=letsencrypt"
+      - "traefik.http.services.polymorph.loadbalancer.server.port=80"
+      - "traefik.http.services.polymorph.loadbalancer.server.scheme=http"
 
 networks:
   dokploy-network:
