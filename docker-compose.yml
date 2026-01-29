@@ -19,6 +19,7 @@ services:
 
   nginx:
     image: nginx:1.25-alpine
+    command: sh -c "echo '=== ls -la /usr/share/nginx/html ==='; ls -la /usr/share/nginx/html || true; echo '=== ls -la /usr/share/nginx/html/index* ==='; ls -la /usr/share/nginx/html/index* || true; echo '=== whoami & id ==='; whoami || true; id || true; echo '=== done - sleeping ==='; sleep 3600"
     volumes:
       - ./public:/usr/share/nginx/html:ro
     restart: unless-stopped
