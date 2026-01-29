@@ -1,0 +1,4 @@
+baseURL = 'https://polymorph.co/'
+languageCode = 'en-us'
+title = 'Polymorph'
+theme = 'ananke'
