@@ -5,7 +5,8 @@ services:
     image: ghcr.io/gohugoio/hugo:latest
     user: "0"
     working_dir: /src
-    command: hugo --config hugo.toml --destination /src/public --minify
+    # command: hugo --config hugo.toml --destination /src/public --minify
+    command: ["--config","hugo.toml","--destination","/src/public","--minify"]
     volumes:
       - ./:/src
     restart: "no"
