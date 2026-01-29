@@ -1,0 +1,2 @@
+Option B — if you have Hugo installed locally:
+hugo --config hugo.toml --baseURL "https://polymorph.co/" --destination ./public --minify --environment production --cleanDestinationDir
