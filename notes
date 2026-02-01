@@ -1,2 +1,39 @@
 Option B — if you have Hugo installed locally:
 hugo --config hugo.toml --baseURL "https://polymorph.co/" --destination ./public --minify --environment production --cleanDestinationDir
+
+ Here's your workflow:                                                      
+                                                                                      
+  Local Development & Testing                                                         
+                                                                                      
+  Option 1: Using Hugo server (recommended for development)                           
+  hugo server --buildDrafts --buildFuture                                             
+  This will:                                                                          
+  - Start a live-reloading server at http://localhost:1313                            
+  - Auto-rebuild when you save changes                                                
+  - Show draft posts (add draft = true in frontmatter)                                
+  - Much faster than full builds                                                      
+                                                                                      
+  Option 2: Using Docker Compose (matches production exactly)                         
+  docker-compose up                                                                   
+  Then visit http://localhost (requires nginx port mapping in docker-compose.yml)     
+                                                                                      
+  Production Deployment Workflow                                                      
+                                                                                      
+  Yes, your workflow should work:                                                     
+                                                                                      
+  1. Create content locally → Test with hugo server                                   
+  2. Push to remote repo → git push                                                   
+  3. Redeploy in Dokploy → Triggers the docker-compose build                          
+                                                                                      
+  The deployment will:                                                                
+  - Run the init-perms service                                                        
+  - Build with Hugo (using the command in your notes file)                            
+  - Generate the ./public/ directory with your new content                            
+  - Nginx serves it at https://polymorph.co/                                          
+                                                                                      
+  Important: Make sure your docker-compose.yml in Dokploy is configured to rebuild the
+   hugo service on deploy. The current setup should work since the hugo service builds
+   the site at startup.                                                               
+                                                                                      
+  Want me to help you create some sample content to test this workflow?               
+                                           

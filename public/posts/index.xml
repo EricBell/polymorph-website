@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Polymorph</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on Polymorph</description>
+    <title>Blog on Polymorph</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Blog on Polymorph</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 03 Apr 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>I like to roar</title>
       <link>http://localhost:1313/posts/260131-first-post/</link>
@@ -21,13 +21,6 @@
       <pubDate>Sat, 02 Apr 2022 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/260131-2nd-post/</guid>
       <description>&lt;p&gt;I got lost in the woods today. Two friends, a Meerkat and a Warthog, found me,&#xA;sung a song with me and gave my life new meaning. Today was a good day.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>About</title>
-      <link>http://localhost:1313/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/about/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;m learning Hugo, one step at a time.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
