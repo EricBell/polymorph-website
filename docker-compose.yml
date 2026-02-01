@@ -5,7 +5,7 @@ services:
 
   init-perms:
     image: alpine:3.18
-    command: sh -c "chown -R 1000:1000 /src || true; echo 'init-perms done'; sleep 1"
+    command: sh -c "mkdir -p /src/public && chown -R 1000:1000 /src && echo 'init-perms done' && sleep 1"
     volumes:
       - ./:/src
     restart: "no"
