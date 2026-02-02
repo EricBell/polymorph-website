@@ -33,7 +33,8 @@ services:
         cp -r /src /tmp/build
         cd /tmp/build
         hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /tmp/build/public --minify --environment production --cleanDestinationDir
-        cp -r /tmp/build/public/* /src/public/
+        rm -rf /src/public
+        cp -r /tmp/build/public /src/
     volumes:
       - ./:/src
     environment:
