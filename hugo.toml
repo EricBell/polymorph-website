@@ -1,7 +1,7 @@
 baseURL = 'https://polymorph.co/'
 languageCode = 'en-us'
 title = 'Polymorph'
-theme = 'coder'
+theme = 'ananke'
 environment = "production"
 enableEmoji = true
 
