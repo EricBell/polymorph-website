@@ -20,16 +20,16 @@ services:
 
   hugo:
     image: ghcr.io/gohugoio/hugo:latest
+    user: root
+    working_dir: /src
     entrypoint: /bin/sh
     command:
       - -c
       - |
-        cp -r /src /tmp/build
-        cd /tmp/build
         hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /tmp/public --minify --environment production --cleanDestinationDir
-        rm -rf /public/*
-        cp -r /tmp/public/* /public/
-        chmod -R 755 /public
+        find /public -mindepth 1 -delete || true
+        cp -r /tmp/public/* /public/ || true
+        chmod -R 755 /public || true
         echo 'Build complete'
     volumes:
       - ./:/src:ro
