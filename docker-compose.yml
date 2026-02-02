@@ -4,11 +4,12 @@ services:
  
 
   init-perms:
-    image: alpine/git:latest
+    image: alpine:3.18
+    entrypoint: /bin/sh
     command:
-      - sh
       - -c
       - |
+        apk add --no-cache git
         git config --global --add safe.directory /src
         cd /src
         git submodule update --init --recursive
