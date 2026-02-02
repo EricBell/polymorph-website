@@ -19,15 +19,18 @@ services:
       - dokploy-network
 
   hugo:
-    image: ghcr.io/gohugoio/hugo:latest
+    image: alpine:latest
     entrypoint: /bin/sh
     command:
       - -c
       - |
+        apk add --no-cache hugo
         cp -r /src /tmp/build
         cd /tmp/build
         hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /tmp/public --minify --environment production --cleanDestinationDir
+        rm -rf /public/*
         cp -r /tmp/public/* /public/
+        chmod -R 755 /public
         echo 'Build complete'
     volumes:
       - ./:/src:ro
