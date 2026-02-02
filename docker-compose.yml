@@ -26,8 +26,14 @@ services:
 
   hugo:
     image: ghcr.io/gohugoio/hugo:latest
-    working_dir: /src
-    command: ["--config","hugo.toml","--baseURL","https://polymorph.co/","--destination","/src/public","--minify","--environment","production","--cleanDestinationDir"]
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        cp -r /src /tmp/build
+        cd /tmp/build
+        hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /tmp/build/public --minify --environment production --cleanDestinationDir
+        cp -r /tmp/build/public/* /src/public/
     volumes:
       - ./:/src
     environment:
