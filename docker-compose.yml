@@ -26,7 +26,7 @@ services:
     command:
       - -c
       - |
-        hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /tmp/public --minify --environment production --cleanDestinationDir
+        hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /tmp/public --cacheDir /tmp/hugo_cache --minify --environment production --cleanDestinationDir
         find /public -mindepth 1 -delete || true
         cp -r /tmp/public/* /public/ || true
         chmod -R 755 /public || true
