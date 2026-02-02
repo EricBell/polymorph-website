@@ -1,31 +1,17 @@
 version: "3"
 
 services:
-  init-submodules:
-    image: alpine:3.18
-    entrypoint: /bin/sh
-    command:
-      - -c
-      - |
-        apk add --no-cache git
-        git config --global --add safe.directory /src
-        cd /src
-        git submodule update --init --recursive
-        echo 'Submodules initialized'
-    volumes:
-      - ./:/src:ro
-    restart: "no"
-    networks:
-      - dokploy-network
-
   hugo:
-    image: ghcr.io/gohugoio/hugo:latest
+    image: alpine:latest
     user: root
     working_dir: /src
     entrypoint: /bin/sh
     command:
       - -c
       - |
+        apk add --no-cache git hugo
+        git config --global --add safe.directory /src
+        git submodule update --init --recursive
         hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /tmp/public --cacheDir /tmp/hugo_cache --minify --environment production --cleanDestinationDir
         find /public -mindepth 1 -delete || true
         cp -r /tmp/public/* /public/ || true
@@ -37,8 +23,6 @@ services:
     environment:
       - HUGO_ENV=production
     restart: "no"
-    depends_on:
-      - init-submodules
     networks:
       - dokploy-network
 
