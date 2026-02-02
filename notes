@@ -35,5 +35,65 @@ hugo --config hugo.toml --baseURL "https://polymorph.co/" --destination ./public
    hugo service on deploy. The current setup should work since the hugo service builds
    the site at startup.                                                               
                                                                                       
-  Want me to help you create some sample content to test this workflow?               
-                                           
+  Want me to help you create some sample content to test this workflow?    
+
+-------------------
+Changing themes:
+ Technical Implications:                                                             
+                                                                                      
+  Easy stuff:                                                                         
+  1. Add theme as submodule:                                                          
+  git submodule add https://github.com/user/theme-name.git themes/theme-name          
+  2. Update hugo.toml:                                                                
+  theme = 'theme-name'                                                                
+  3. Test locally before deploying                                                    
+                                                                                      
+  Potential issues:                                                                   
+  - Each theme has different config requirements (check theme's docs)                 
+  - Some need specific front matter in your posts                                     
+  - Some require Hugo modules instead of submodules                                   
+  - Homepage content structure varies by theme                                        
+                                                                                      
+  Security Implications:                                                              
+                                                                                      
+  Low risk if you:                                                                    
+  - ✅ Use popular, well-maintained themes (GitHub stars > 500, recent updates)       
+  - ✅ Stick to themes from known authors or Hugo's theme showcase                    
+  - ✅ Review the theme's code (at least briefly scan layouts/)                       
+  - ✅ Test locally before deploying                                                  
+                                                                                      
+  Higher risk:                                                                        
+  - ❌ Random themes from unknown sources                                             
+  - ❌ Abandoned themes (no updates in years)                                         
+  - ❌ Themes with no community/reviews                                               
+                                                                                      
+  Why? Themes run during Hugo build and could theoretically:                          
+  - Inject malicious content into your site                                           
+  - Exfiltrate data during build                                                      
+  - Include vulnerable dependencies                                                   
+                                                                                      
+  Recommended Approach:                                                               
+                                                                                      
+  1. Browse Hugo themes: https://themes.gohugo.io/                                    
+  2. Pick popular ones - look for:                                                    
+    - High GitHub stars                                                               
+    - Recent updates                                                                  
+    - Good documentation                                                              
+    - Active community                                                                
+  3. Test locally first:                                                              
+  git submodule add <theme-url> themes/<theme-name>                                   
+  # Update hugo.toml                                                                  
+  hugo server                                                                         
+  4. If it works, deploy:                                                             
+  git add .gitmodules themes/ hugo.toml                                               
+  git commit -m "Add theme-name theme"                                                
+  git push                                                                            
+                                                                                      
+  Current Themes You Have:                                                            
+                                                                                      
+  - ananke - Feature-rich, good for content-heavy sites                               
+  - coder - Minimal, developer-focused                                                
+                                                                                      
+  Want me to help you add a specific theme, or recommend some based on your site's    
+  needs?                                                                              
+                     
