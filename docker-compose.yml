@@ -26,7 +26,8 @@ services:
       - |
         cp -r /src /tmp/build
         cd /tmp/build
-        hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /public --minify --environment production --cleanDestinationDir
+        hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /tmp/public --minify --environment production --cleanDestinationDir
+        cp -r /tmp/public/* /public/
         echo 'Build complete'
     volumes:
       - ./:/src:ro
