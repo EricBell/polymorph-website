@@ -4,8 +4,8 @@ services:
  
 
   init-perms:
-    image: alpine:3.18
-    command: sh -c "mkdir -p /src/public && chown -R 1000:1000 /src && echo 'init-perms done' && sleep 1"
+    image: alpine/git:latest
+    command: sh -c "git config --global --add safe.directory /src && cd /src && git submodule update --init --recursive && mkdir -p /src/public && chown -R 1000:1000 /src && echo 'init-perms done' && sleep 1"
     volumes:
       - ./:/src
     restart: "no"
