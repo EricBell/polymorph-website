@@ -28,7 +28,7 @@ services:
     image: ghcr.io/gohugoio/hugo:latest
     user: "1000"
     working_dir: /src
-    command: ["--config","hugo.toml","--baseURL","https://polymorph.co/","--destination","/src/public","--minify","--environment","production","--cleanDestinationDir"]
+    command: ["--config","hugo.toml","--baseURL","https://polymorph.co/","--destination","/src/public","--minify","--environment","production","--cleanDestinationDir","--cacheDir","/tmp/hugo_cache"]
     volumes:
       - ./:/src
     environment:
