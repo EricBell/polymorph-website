@@ -1,9 +1,7 @@
 version: "3"
 
 services:
- 
-
-  init-perms:
+  init-submodules:
     image: alpine:3.18
     entrypoint: /bin/sh
     command:
@@ -13,13 +11,9 @@ services:
         git config --global --add safe.directory /src
         cd /src
         git submodule update --init --recursive
-        mkdir -p /src/public /src/resources
-        chown -R 1000:1000 /src
-        chmod -R u+w /src
-        echo 'init-perms done'
-        sleep 1
+        echo 'Submodules initialized'
     volumes:
-      - ./:/src
+      - ./:/src:ro
     restart: "no"
     networks:
       - dokploy-network
@@ -32,42 +26,40 @@ services:
       - |
         cp -r /src /tmp/build
         cd /tmp/build
-        hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /tmp/build/public --minify --environment production --cleanDestinationDir
-        rm -rf /src/public
-        cp -r /tmp/build/public /src/
+        hugo --config hugo.toml --baseURL https://polymorph.co/ --destination /public --minify --environment production --cleanDestinationDir
+        echo 'Build complete'
     volumes:
-      - ./:/src
+      - ./:/src:ro
+      - public-data:/public
     environment:
       - HUGO_ENV=production
     restart: "no"
     depends_on:
-      - init-perms
+      - init-submodules
     networks:
       - dokploy-network
 
   nginx:
     image: nginx:1.25-alpine
     volumes:
-    - ./public:/usr/share/nginx/html:ro
-    - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - public-data:/usr/share/nginx/html:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     restart: unless-stopped
     depends_on:
-    - hugo
+      - hugo
     networks:
-    - dokploy-network
+      - dokploy-network
     labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.polymorph-nginx.rule=Host(`polymorph.co`) || Host(`www.polymorph.co`)"
-    - "traefik.http.routers.polymorph-nginx.entrypoints=websecure"
-    - "traefik.http.routers.polymorph-nginx.tls.certResolver=letsencrypt"
-    - "traefik.http.routers.polymorph-nginx.service=polymorph-nginx"
-    - "traefik.http.services.polymorph-nginx.loadbalancer.server.port=80"
-    - "traefik.http.services.polymorph-nginx.loadbalancer.server.scheme=http"
+      - "traefik.enable=true"
+      - "traefik.http.routers.polymorph-nginx.rule=Host(`polymorph.co`) || Host(`www.polymorph.co`)"
+      - "traefik.http.routers.polymorph-nginx.entrypoints=websecure"
+      - "traefik.http.routers.polymorph-nginx.tls.certResolver=letsencrypt"
+      - "traefik.http.routers.polymorph-nginx.service=polymorph-nginx"
+      - "traefik.http.services.polymorph-nginx.loadbalancer.server.port=80"
+      - "traefik.http.services.polymorph-nginx.loadbalancer.server.scheme=http"
 
- 
-
-
-
+volumes:
+  public-data:
 
 networks:
   dokploy-network:
