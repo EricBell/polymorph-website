@@ -32,7 +32,7 @@ services:
         chmod -R 755 /public || true
         echo 'Build complete'
     volumes:
-      - ./:/src:ro
+      - ./:/src
       - public-data:/public
     environment:
       - HUGO_ENV=production
