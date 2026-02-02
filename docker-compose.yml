@@ -13,8 +13,9 @@ services:
         git config --global --add safe.directory /src
         cd /src
         git submodule update --init --recursive
-        mkdir -p /src/public
+        mkdir -p /src/public /src/resources
         chown -R 1000:1000 /src
+        chmod -R u+w /src
         echo 'init-perms done'
         sleep 1
     volumes:
