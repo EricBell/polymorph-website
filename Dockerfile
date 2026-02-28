@@ -1,4 +1,4 @@
-FROM hugomods/hugo:exts-0.155.0 AS builder
+FROM hugomods/hugo:latest AS builder
 
 WORKDIR /src
 
