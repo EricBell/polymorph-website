@@ -1,4 +1,4 @@
-FROM klakegg/hugo:0.124.1-ext-alpine AS builder
+FROM hugomods/hugo:exts-0.124.1 AS builder
 
 WORKDIR /src
 
