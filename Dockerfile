@@ -6,6 +6,9 @@ COPY . .
 
 ARG BASE_URL
 
+# Ensure modules are downloaded
+RUN hugo mod tidy
+
 RUN hugo \
     --baseURL "${BASE_URL}" \
     --minify \

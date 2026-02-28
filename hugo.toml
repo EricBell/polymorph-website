@@ -1,7 +1,6 @@
 baseURL = 'https://polymorph.co/'
 languageCode = 'en-us'
 title = 'Polymorph'
-theme = 'coder'
 environment = "production"
 enableEmoji = true
 
@@ -36,3 +35,7 @@ url = "about/"
 name = "Blog"
 weight = 2
 url = "posts/"
+
+[module]
+  [[module.imports]]
+    path = "github.com/luizdepra/hugo-coder"
