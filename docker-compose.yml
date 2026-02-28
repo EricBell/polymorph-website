@@ -11,10 +11,6 @@ services:
       - dokploy-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.${SITE_NAME}.rule=Host(`${SITE_DOMAIN}`)"
-      - "traefik.http.routers.${SITE_NAME}.entrypoints=websecure"
-      - "traefik.http.routers.${SITE_NAME}.tls.certresolver=letsencrypt"
-      - "traefik.http.services.${SITE_NAME}.loadbalancer.server.port=80"
       - "traefik.http.routers.${SITE_NAME}.middlewares=global-compress@docker,global-sec@docker,global-cache@docker"
 
 networks:
