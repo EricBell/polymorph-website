@@ -7,4 +7,4 @@ RUN hugo --baseURL "${BASE_URL}" --minify --environment production --gc --cleanD
 FROM ghcr.io/static-web-server/static-web-server:latest
 COPY --from=builder /src/public /public
 EXPOSE 80
-CMD ["static-web-server", "--root", "/public"]
+CMD ["--root", "/public"]
